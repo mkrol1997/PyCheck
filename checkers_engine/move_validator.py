@@ -8,10 +8,7 @@ class Validator:
         self.matrix = board
 
     def find_pawns_available_to_move(self, current_player):
-        legal_moves = Validator._find_pawns_to_capture(self, player=current_player)
-
-        if legal_moves:
-            return legal_moves
+        legal_moves = []
 
         def is_valid_move(row, column):
             return 0 <= row < 8 and 0 <= column < 8
@@ -35,7 +32,7 @@ class Validator:
     def find_pawn_legal_moves(self, player, pawn_cords):
         pawn_cords = [int(cord) for cord in pawn_cords]
 
-        legal_moves = self._get_capture_cords(pawn_cords, player)
+        legal_moves = self.get_capture_cords(pawn_cords, player)
 
         if not legal_moves:
             try:
@@ -52,7 +49,7 @@ class Validator:
 
         return legal_moves
 
-    def _find_pawns_to_capture(self, player):
+    def find_pawns_to_capture(self, player):
         legal_moves = []
 
         if player == 1:
@@ -101,8 +98,9 @@ class Validator:
 
         return legal_moves
 
-    def _get_capture_cords(self, pawn_cords, player):
+    def get_capture_cords(self, pawn_cords, player):
         legal_moves = []
+        pawn_cords = [int(cord) for cord in pawn_cords]
 
         try:
             if (

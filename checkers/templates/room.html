@@ -18,30 +18,14 @@
 
 <script>
     let currentPlayer = 1;
-    let player_moves = [];
+    let pawns_to_capture = [];
 
     const pawn_white_img = "{{ pawn_white }}";
     const pawn_black_img = "{{ pawn_black }}";
 
-    socket.emit('get_matrix');
+    updateBoard();
+    main();
 
-    socket.on('receive_matrix', function(matrix) {
-        drawChessBoard(matrix.matrix);
-    });
-
-    findPawnsToMove(currentPlayer)
-        .then((moves) => {
-            moves.pawns_cords.forEach(coord => {
-                let data_cords = coord.join('-');
-                let elements = document.querySelectorAll(`[data-position="${data_cords}"]`);
-
-                highlightPossibleMoves(elements);
-                enablePawnsToMove(elements);
-            });
-        })
-        .catch((error) => {
-            console.error(error);
-        });
 </script>
 
 
