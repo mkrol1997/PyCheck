@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 flask = "*"
 pre-commit = "*"
+flask-socketio = "*"
 
 [dev-packages]
 
