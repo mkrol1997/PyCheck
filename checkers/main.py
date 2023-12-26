@@ -1,6 +1,6 @@
-import random
+import uuid
 
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, render_template, url_for
 
 main = Blueprint("main", __name__)
 
@@ -12,8 +12,13 @@ def test():
 
 @main.route("/room")
 def room():
-    room_id = random.randint(100000, 999999)
-    pawn_black_url = url_for("static", filename="assets/board/pawn_black.png")
-    pawn_white_url = url_for("static", filename="assets/board/pawn_white.png")
+    room_id = str(uuid.uuid4())[:8]
 
-    return render_template("room.html", room=room_id, pawn_white=pawn_white_url, pawn_black=pawn_black_url)
+    assets = {
+        "pawn_black": url_for("static", filename="assets/board/pawn_black.png"),
+        "pawn_black_king": url_for("static", filename="assets/board/pawn_black_king.png"),
+        "pawn_white": url_for("static", filename="assets/board/pawn_white.png"),
+        "pawn_white_king": url_for("static", filename="assets/board/pawn_white_king.png"),
+    }
+
+    return render_template("room.html", room=room_id, **assets)

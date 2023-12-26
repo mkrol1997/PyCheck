@@ -3,7 +3,7 @@ from hashlib import md5
 
 from flask import Flask
 
-from .ws_events import socketio
+from websockets.ws_events import socketio
 
 
 def create_app():
