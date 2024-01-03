@@ -39,12 +39,16 @@ function enablePawnsToBeSelected(pawns) {
 }
 
 function disablePawnsToBeSelected(pawns) {
+    //  Disables pawns with legal moves to be selected
+
     pawns.forEach(pawn => {
         pawn.removeEventListener('click', selectPawn)
     });
 }
 
 function selectPawn(event) {
+    //  Shows available moves for selected pawn, disables the rest of them
+
     disablePawnsToBeSelected(pawn_objects);
     removePawnGreyBackground();
     chooseSquareToMove(event.currentTarget);

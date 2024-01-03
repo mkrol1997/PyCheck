@@ -25,7 +25,7 @@ class GameEngine:
         from_row, from_col = from_cords
         to_row, to_col = to_cords
 
-        if self.__should_pawn_become_king(move_to_row=to_row):
+        if self._should_pawn_become_king(move_to_row=to_row):
             self.matrix[from_row][from_col].is_king = True
 
         self.matrix[from_row][from_col], self.matrix[to_row][to_col] = (
@@ -74,8 +74,8 @@ class GameEngine:
                     check_dirs.extend([DIRECTIONS["back_left"], DIRECTIONS["back_right"]])
 
                 for direction in check_dirs:
-                    if self.__can_move_to_direction(*pawn_cords, direction=direction):
-                        self.__add_move_coordinates(*pawn_cords, direction=direction)
+                    if self._can_move_to_direction(*pawn_cords, direction=direction):
+                        self._add_move_coordinates(*pawn_cords, direction=direction)
 
     def find_available_capture_moves(self) -> None:
         """Returns all possible capture moves with necessary coordinates."""
@@ -94,14 +94,14 @@ class GameEngine:
                 if self.matrix[row][column].is_king:
                     capture_dirs.extend([DIRECTIONS["back_left"], DIRECTIONS["back_right"]])
 
-                self.__get_capture_cords(pawn_cords, capture_dirs, pawn_cords, [], None)
+                self._get_capture_cords(pawn_cords, capture_dirs, pawn_cords, [], None)
 
-    def __get_capture_cords(self, pawn_cords, directions, start, captures, last_move):
+    def _get_capture_cords(self, pawn_cords, directions, start, captures, last_move):
         row, column = pawn_cords
         found_captures = []
 
         for direction in directions:
-            if self.__can_capture_at_direction(*pawn_cords, direction=direction):
+            if self._can_capture_at_direction(*pawn_cords, direction=direction):
                 capture_cords = row - (direction[0] * self.cur_player), column - direction[1]
                 move_to_cords = row - 2 * (direction[0] * self.cur_player), column - 2 * direction[1]
                 found_captures.append((capture_cords, move_to_cords))
@@ -109,16 +109,16 @@ class GameEngine:
         if found_captures:
             for capture, move_to in found_captures:
                 if capture not in captures:
-                    self.__get_capture_cords(move_to, directions, start, captures + [capture], move_to)
+                    self._get_capture_cords(move_to, directions, start, captures + [capture], move_to)
 
         if captures:
             move_to = last_move
-            self.__add_capture_coordinates(start, captures, move_to)
+            self._add_capture_coordinates(start, captures, move_to)
 
-    def __should_pawn_become_king(self, move_to_row: int) -> bool:
+    def _should_pawn_become_king(self, move_to_row: int) -> bool:
         return move_to_row in (0, len(self.matrix) - 1)
 
-    def __can_move_to_direction(self, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]) -> bool:
+    def _can_move_to_direction(self, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]) -> bool:
         """Checks if a pawn at given cords has available square to move towards given
         direction."""
 
@@ -132,7 +132,7 @@ class GameEngine:
         except IndexError:
             return False
 
-    def __add_move_coordinates(self, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]) -> None:
+    def _add_move_coordinates(self, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]) -> None:
         """Adds square coordinates to the list of available basic pawn moves."""
 
         pawn_cords = (row, column)
@@ -146,7 +146,7 @@ class GameEngine:
         except KeyError:
             self.basic_moves[pawn_cords] = [(move_to_row, move_to_col)]
 
-    def __can_capture_at_direction(self, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]) -> bool:
+    def _can_capture_at_direction(self, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]) -> bool:
         """Checks if a pawn at given cords has available opponent pawns to capture at his
         left side."""
 
@@ -161,7 +161,7 @@ class GameEngine:
             and self.matrix[move_to_row][move_to_col].value == 0
         )
 
-    def __add_capture_coordinates(
+    def _add_capture_coordinates(
         self, pawn_cords: Tuple[int, int], capture_cords: Tuple[int, int], move_to_cords: Tuple[int, int]
     ) -> None:
         """Adds square coordinates to the list of available basic pawn moves."""

@@ -5,3 +5,6 @@ class Piece:
 
     def make_king(self) -> None:
         self.is_king = True
+
+    def __eq__(self, other):
+        return isinstance(other, Piece) and self.value == other.value
