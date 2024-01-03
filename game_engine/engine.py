@@ -15,13 +15,11 @@ class GameEngine:
         self.basic_moves = {}
 
     def make_pawn_capture(self, capture_cords: tuple[int, int]) -> None:
-        """Removes Pawn from the game board."""
         for capture in capture_cords:
             row, col = capture
             self.matrix[row][col].value = 0
 
     def move_pawn(self, from_cords: tuple[int, int], to_cords: tuple[int, int]) -> None:
-        """Swaps positions between two squares."""
         from_row, from_col = from_cords
         to_row, to_col = to_cords
 
@@ -34,18 +32,15 @@ class GameEngine:
         )
 
     def get_next_moves(self) -> Union[List[int, int], None]:
-        """Returns list of possible next player moves coordinates."""
         if self.captures:
             return list(self.captures.keys())
         elif self.basic_moves:
             return list(self.basic_moves.keys())
 
     def switch_active_player(self) -> None:
-        """Toggle player to perform next move."""
         self.cur_player *= -1
 
     def update_pawns_with_legal_moves(self) -> None:
-        """Update list of pawns with either legal captures or basic moves."""
         self.captures = {}
         self.basic_moves = {}
 
@@ -54,12 +49,9 @@ class GameEngine:
             self.find_available_basic_moves()
 
     def is_game_over(self) -> bool:
-        """Checks if player still has moves available."""
         return not self.captures and not self.basic_moves
 
     def find_available_basic_moves(self) -> None:
-        """Returns all possible basic moves with necessary coordinates."""
-
         player = self.cur_player
 
         for row in range(BOARD_SIZE):
@@ -78,8 +70,6 @@ class GameEngine:
                         self._add_move_coordinates(*pawn_cords, direction=direction)
 
     def find_available_capture_moves(self) -> None:
-        """Returns all possible capture moves with necessary coordinates."""
-
         player = self.cur_player
 
         for row in range(BOARD_SIZE):
@@ -119,9 +109,6 @@ class GameEngine:
         return move_to_row in (0, len(self.matrix) - 1)
 
     def _can_move_to_direction(self, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]) -> bool:
-        """Checks if a pawn at given cords has available square to move towards given
-        direction."""
-
         move_to_row, move_to_col = row - (direction[0] * self.cur_player), column - direction[1]
 
         if self.__has_valid_indexing(move_to_row, move_to_col):
@@ -133,8 +120,6 @@ class GameEngine:
             return False
 
     def _add_move_coordinates(self, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]) -> None:
-        """Adds square coordinates to the list of available basic pawn moves."""
-
         pawn_cords = (row, column)
         move_to_row, move_to_col = row - (direction[0] * self.cur_player), column - direction[1]
 
@@ -147,9 +132,6 @@ class GameEngine:
             self.basic_moves[pawn_cords] = [(move_to_row, move_to_col)]
 
     def _can_capture_at_direction(self, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]) -> bool:
-        """Checks if a pawn at given cords has available opponent pawns to capture at his
-        left side."""
-
         opponent_row, opponent_col = row - (direction[0] * self.cur_player), column - direction[1]
         move_to_row, move_to_col = row - 2 * (direction[0] * self.cur_player), column - 2 * direction[1]
 
@@ -164,7 +146,6 @@ class GameEngine:
     def _add_capture_coordinates(
         self, pawn_cords: Tuple[int, int], capture_cords: Tuple[int, int], move_to_cords: Tuple[int, int]
     ) -> None:
-        """Adds square coordinates to the list of available basic pawn moves."""
         try:
             self.captures[pawn_cords][move_to_cords] = capture_cords
 
@@ -173,6 +154,4 @@ class GameEngine:
 
     @staticmethod
     def __has_valid_indexing(*args: int) -> bool:
-        """Disable array indexing with negative index; Applies to top and left board
-        edges -> moves towards left and top border only."""
         return any(arg < 0 or arg > 7 for arg in args)
