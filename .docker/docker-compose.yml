@@ -5,6 +5,7 @@ services:
     build:
       context: ..
       dockerfile: .docker/Dockerfile
+    image: ${ECR_REGISTRY}/pycheck:latest
     command: ["python", "run.py"]
     ports:
       - "8000:8000"
