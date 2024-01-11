@@ -29,7 +29,6 @@ jobs:
       - name: Push Image to ECR
         run: |
           docker push ${{ secrets.ECR_REGISTRY }}/pycheck:latest
-        working-directory: ${{ github.workspace }}/.docker
 
       - name: Cleanup
         run: |
