@@ -20,11 +20,10 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Build Docker Image
-        run: |
-          docker-compose build web
+        run: docker-compose build web
         working-directory: ${{ github.workspace }}/.docker
         env:
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}/pycheck
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
 
       - name: Push Image to ECR
         run: |
@@ -36,4 +35,4 @@ jobs:
           docker logout
 
         if: always()
-        working-directory: ${{ github.workspace }}/pixel_perfect
+        working-directory: ${{ github.workspace }}/.docker
