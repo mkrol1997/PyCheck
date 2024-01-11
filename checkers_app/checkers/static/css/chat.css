@@ -9,11 +9,25 @@
     overflow-x: hidden;
 }
 
-.chat-message {
+.receiver-message {
     max-width: fit-content;
     margin-bottom: 10px;
+    margin-right: 10px;
     border-radius: 15px;
     background-color: orange;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px 8px;
+    width: fit-content;
+    font-size: 80%;
+}
+
+.sender-message {
+    max-width: fit-content;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    border-radius: 15px;
+    background-color: grey;
     color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 15px 8px;

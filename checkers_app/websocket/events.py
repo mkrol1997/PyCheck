@@ -115,4 +115,4 @@ def disconnect():
 @socketio.on("send_message")
 def handle_new_message(data):
     channel = data.get("room")
-    emit("handle_message", data.get("message"), room=channel, broadcast=True)
+    emit("handle_message", data.get("message"), room=channel, broadcast=True, include_self=False)
