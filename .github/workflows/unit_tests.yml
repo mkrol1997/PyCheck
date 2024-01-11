@@ -1,0 +1,43 @@
+name: CI
+
+on:
+
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: 'pip'
+
+      - name: Install pipenv
+        run: |
+          pip install pipenv
+          pipenv install --dev --system --deploy
+        working-directory: ${{ github.workspace }}
+
+      - name: Run engine unit tests
+        run: |
+          pytest tests_unit_capture.py
+          pytest tests_unit_capture.py
+
+        working-directory: ${{ github.workspace }}/checkers_app/game_engine/tests
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          SESSION_TIMEOUT: ${{ secrets.SESSION_TIMEOUT }}
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
