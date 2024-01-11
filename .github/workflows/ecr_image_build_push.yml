@@ -1,0 +1,39 @@
+name: Build and Push Docker Images to ECR
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to ECR
+        run: aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Build Docker Image
+        run: |
+          docker-compose build web
+        env:
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+        working-directory: ${{ github.workspace }}/pixel_perfect
+
+      - name: Push Image to ECR
+        run: |
+          docker push ${{ secrets.ECR_REGISTRY }}/pixel_perfect:latest
+
+      - name: Cleanup
+        run: |
+          docker-compose down --rmi local -v
+          docker logout
+
+        if: always()
+        working-directory: ${{ github.workspace }}/pixel_perfect

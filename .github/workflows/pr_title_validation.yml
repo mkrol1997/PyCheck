@@ -1,0 +1,20 @@
+name: PR Title Validation
+
+on:
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  pr_title_validation:
+    name: Pull Request Title Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR Title
+        if: |
+          !startsWith(github.event.pull_request.title, '[FEATURE]') &&
+          !startsWith(github.event.pull_request.title, '[FIX]')
+        run: |
+          echo "Invalid PR title. Title must start with '[FEATURE]' or '[FIX]'."
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          exit 1
