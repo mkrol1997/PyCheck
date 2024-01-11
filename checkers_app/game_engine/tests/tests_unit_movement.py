@@ -1,8 +1,8 @@
 import pytest
-from game_engine.board import Board
-from game_engine.engine import GameEngine
-from game_engine.piece import Piece
 
+from checkers_app.game_engine.board import Board
+from checkers_app.game_engine.engine import GameEngine
+from checkers_app.game_engine.piece import Piece
 from constant import DIRECTIONS
 
 
