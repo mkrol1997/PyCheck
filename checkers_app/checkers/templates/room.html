@@ -1,0 +1,138 @@
+{% include "header.html" %}
+
+<section>
+    <div class="d-flex justify-content-around align-items-center text-grey mb-2 ">
+        <div class="shadow" style="height: 61vh; width: 19vw; margin-bottom: 4.6rem;">
+            <div class="w-100 h-100 d-flex align-items-start flex-column" style="background-color: #ececec;">
+                <div class="w-100 d-flex justify-content-center align-items-center text-center"
+                     style="background-color: orange;">
+                    <h5 class="text-white pt-2">Share your game!</h5>
+                </div>
+
+                <div class="h-100 w-100 justify-content-start align-items-center d-flex text-center">
+                    <div class="w-100">
+                        <h6>Share your code:</h6>
+                        <div><h4 id="room_id" style="color: orange">{{ channel }} </h4></div>
+                        <button class="text-white btn btn-warning" onclick="copyToClipboard('{{ channel | safe }}')"><i
+                                class="fa-regular fa-copy"></i> &nbsp;Copy code
+                        </button>
+                        <p class="mt-4">Or send direct link</p>
+                        <h5 id="room_url" style="color: orange" onclick="copyToClipboard('{{ join_url | safe }}')">{{
+                            join_url }}</h5>
+                        <button class="text-white btn btn-warning"><i class="fa-regular fa-copy"></i> &nbsp;Copy link
+                        </button>
+                    </div>
+                </div>
+                <div class="d-flex pt-4 justify-content-center  w-100">
+                    <p class="d-flex align-items-end text-center">
+                        <small>The game will start automatically when both players connect</small></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="shadow my-3" style="width: 33vw;">
+            <div class="d-block">
+                <div class="d-flex flex-column justify-content-center align-items-center text-center room-heading">
+                    <h5 class="text-white pt-2">Game Board</h5>
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center py-4 h-100">
+                    <div class="board" id="checkersBoard" style="background-image: url({{board_img}})"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-around align-items-center text-grey mb-2 ">
+            <div class="shadow" style="height: 61vh; width: 19vw; margin-bottom: 4.6rem;">
+                <div class="w-100 h-100 d-flex align-items-start flex-column" style="background-color: #ececec;">
+                    <div class="w-100 d-flex justify-content-center align-items-center text-center room-heading">
+                        <h5 class="text-white pt-2">Chat Room</h5>
+                    </div>
+
+                    <div class="chat-messages h-100 w-100 justify-content-start align-items-start d-flex text-center"
+                         id="messages-wrapper">
+                        <div class="col-12" id="chat-messages"></div>
+                    </div>
+
+                    <div class="d-flex pt-4 justify-content-center w-100">
+                        <div class="d-flex flex-row justify-content-end h-100 w-100">
+                            <input type="text" id="message" placeholder="Type your message..."
+                                   class="w-100 h-100 rounded-md align-self-end">
+                            <button class="btn btn-warning text-white rounded-md cursor-pointer" id="message_btn">Send</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="modal fade" id="modalContent" tabindex="-1" role="dialog"
+         aria-labelledby="modalContentTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="border-style: solid; background-color: #f5f5f5">
+                <div class="modal-header" style="background-color: orange">
+                    <h3 class="modal-title w-100 text-center text-white">Game Finished</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid" style="color: grey;">
+                        <div class="row">
+                            <div class=" mb-1 col-12 w-100 text-center d-flex align items center justify-content-center">
+                                <h3 id="result_reason"></h3>
+                            </div>
+                            <div class="col-12 mb-4 w-100 text-center d-flex align items center justify-content-center">
+                                <img src="" id="winner_img">
+                            </div>
+                            <div class=" mb-1 col-12 w-100 text-center d-flex align items center justify-content-center">
+                                <h3>is a winner!</h3>
+                            </div>
+                            <div class="col-12 w-100 text-center d-flex align items center justify-content-center">
+                                <h2 class="text-warning">Congratulations!</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Socket IO -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+        crossorigin="anonymous"></script>
+
+<!-- Custom JavaScript -->
+<script src="{{ url_for('static', filename='js/socketio/socket.js') }}"></script>
+<script src="{{ url_for('static', filename='js/socketio/game_events.js') }}"></script>
+<script src="{{ url_for('static', filename='js/socketio/chat_events.js') }}"></script>
+<script src="{{ url_for('static', filename='js/engine_manager/engine_connection.js') }}"></script>
+<script src="{{ url_for('static', filename='js/utils/draw_board.js') }}"></script>
+<script src="{{ url_for('static', filename='js/utils/fetch_channel.js') }}"></script>
+<script src="{{ url_for('static', filename='js/utils/tools.js') }}"></script>
+
+<script>
+    channel = "{{ channel }}"
+
+    let pawns_cords_with_legal_moves = [];
+    let pawn_objects = [];
+    const board = document.getElementById('checkersBoard');
+
+    const pawn_white_img = "{{ pawn_white }}";
+    const pawn_white_king_img = "{{ pawn_white_king }}";
+
+    const pawn_black_img = "{{ pawn_black }}";
+    const pawn_black_king_img = "{{ pawn_black_king }}";
+
+    joinRoom();
+    updateBoard();
+</script>
+
+
+{% include "footer.html" %}
