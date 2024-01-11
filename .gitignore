@@ -2,3 +2,5 @@
 checkers/__pycache__/
 game_engine/__pycache__/
 game_engine/tests/__pycache__/
+.env
+checkers_app/game_engine/tests/__pycache__
