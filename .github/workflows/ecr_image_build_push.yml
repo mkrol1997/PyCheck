@@ -22,12 +22,14 @@ jobs:
       - name: Build Docker Image
         run: |
           docker-compose build web
+        working-directory: ${{ github.workspace }}/.docker
         env:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}/pycheck
 
       - name: Push Image to ECR
         run: |
           docker push ${{ secrets.ECR_REGISTRY }}/pycheck:latest
+        working-directory: ${{ github.workspace }}/.docker
 
       - name: Cleanup
         run: |
