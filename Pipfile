@@ -8,6 +8,8 @@ flask = "*"
 pre-commit = "*"
 flask-socketio = "*"
 pytest = "*"
+pymongo = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
