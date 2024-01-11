@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: .docker/Dockerfile
+    command: ["python", "run.py"]
+    ports:
+      - "8000:8000"
+      - "5000:5000"
+    depends_on:
+      - mongo
+    environment:
+      - SECRET_KEY
+      - SESSION_TIMEOUT
+      - DATABASE_HOST
+      - DATABASE_NAME
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
