@@ -23,12 +23,11 @@ jobs:
         run: |
           docker-compose build web
         env:
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-        working-directory: ${{ github.workspace }}/pixel_perfect
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}/pycheck
 
       - name: Push Image to ECR
         run: |
-          docker push ${{ secrets.ECR_REGISTRY }}/pixel_perfect:latest
+          docker push ${{ secrets.ECR_REGISTRY }}/pycheck:latest
 
       - name: Cleanup
         run: |
