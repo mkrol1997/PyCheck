@@ -20,6 +20,7 @@ function addMessageDiv(owner, message) {
 
         if ( owner == "sender") {
             message_div.classList.add('sender-message');
+
         } else {
             message_div.classList.add('receiver-message');
             message_div.classList.add('ml-auto');

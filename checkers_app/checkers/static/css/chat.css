@@ -12,7 +12,7 @@
 .receiver-message {
     max-width: fit-content;
     margin-bottom: 10px;
-    margin-right: 10px;
+    margin-right: 5px;
     border-radius: 15px;
     background-color: orange;
     color: #fff;
@@ -25,7 +25,7 @@
 .sender-message {
     max-width: fit-content;
     margin-bottom: 10px;
-    margin-left: 10px;
+    margin-left: 5px;
     border-radius: 15px;
     background-color: grey;
     color: #fff;
