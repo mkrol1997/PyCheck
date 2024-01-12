@@ -100,13 +100,14 @@ def disconnect():
     try:
         channels = socketio.server.manager.get_rooms(sid=user_sid, namespace="/")
         room_channel = next(filter(lambda channel: len(channel) == 8, channels))
+        winner = db_tools.get_current_player(room_channel, user_sid) * -1
 
     except StopIteration:
         return
+    except TypeError:
+        winner = False
 
     emit("handle_message", f"{request.sid} has left the room", room=room_channel, broadcast=True)
-
-    winner = db_tools.get_current_player(room_channel, user_sid) * -1
     if winner:
         games_storage.remove_game(room_channel)
         emit("game_finished", {"winner": winner, "status": status}, room=room_channel, broadcast=True)
