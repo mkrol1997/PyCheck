@@ -64,7 +64,6 @@ Play head-to-head against your friends or challenge a computer opponent powered 
   </table>
 </div>
 
-**Experience the power of PixelPerfect today and witness the transformation of your images!**
 ________
 # Description
 
