@@ -34,7 +34,7 @@ PyCheck ensures instant connections between users, enabling real-time communicat
 Built using technologies, including:
 
 - **Flask**: A Python web framework used for backend development.
-- **Flask-SocketIO**: Enabling real-time bidirectional communication between the server and clients for a responsive user experience.
+- **Flask-SocketIO**: Enabling real-time bidirectional communication between the server and clients.
 - **MongoDB**: A NoSQL database for scalable and flexible data management.
 - **PyTest:** Testing framework for automated testing of the application.
 - **Monte Carlo Algorithm (MCST):** Employs the Monte Carlo search algorithm for intelligent decision-making in the player vs. computer mode.
