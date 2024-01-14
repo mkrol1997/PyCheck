@@ -3,11 +3,9 @@ from flask_socketio import emit, join_room
 
 from checkers_app.checkers.main import collection
 from checkers_app.database import db_tools
-from checkers_app.game_engine import games_storage
+from checkers_app.game_engine import game_engine, games_storage
 from checkers_app.game_engine.engine import GameEngine
 from checkers_app.websocket import socketio
-
-game_engine = GameEngine()
 
 
 @socketio.on("user_connected")
