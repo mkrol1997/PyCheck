@@ -7,7 +7,7 @@ from constant import *
 
 
 class GameEngine:
-    def move_pawn(self, game: Game, from_cords: tuple[int, int], to_cords: tuple[int, int]) -> None:
+    def move_pawn(self, game: Game, from_cords: Tuple[int, int], to_cords: Tuple[int, int]) -> None:
         from_row, from_col = from_cords
         to_row, to_col = to_cords
 
@@ -54,9 +54,9 @@ class GameEngine:
         self,
         game: Game,
         pawn_cords: Tuple[int, int],
-        directions: list[Tuple[int, int]],
+        directions: List[Tuple[int, int]],
         start: Tuple[int, int],
-        captures: list[int, int],
+        captures: List[Tuple[int, int]],
         last_move: Union[Tuple[int, int], None],
     ):
         row, column = pawn_cords
@@ -84,7 +84,7 @@ class GameEngine:
             return list(game.basic_moves.keys())
 
     @staticmethod
-    def make_pawn_capture(game: Game, capture_cords: tuple[int, int]) -> None:
+    def make_pawn_capture(game: Game, capture_cords: Tuple[int, int]) -> None:
         for capture in capture_cords:
             row, col = capture
             game.board.matrix[row][col].value = 0
@@ -110,7 +110,7 @@ class GameEngine:
         return move_to_row in (0, len(board.matrix) - 1)
 
     def _can_move_to_direction(
-        self, game: Game, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]
+        self, game: Game, row: int, column: int, direction: Tuple[Union[-1, 1], Union[-1, 1]]
     ) -> bool:
         move_to_row, move_to_col = row - (direction[0] * game.active_player), column - direction[1]
 
@@ -123,7 +123,7 @@ class GameEngine:
             return False
 
     @staticmethod
-    def _add_move_coordinates(game, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]) -> None:
+    def _add_move_coordinates(game, row: int, column: int, direction: Tuple[Union[-1, 1], Union[-1, 1]]) -> None:
         pawn_cords = (row, column)
         move_to_row, move_to_col = row - (direction[0] * game.active_player), column - direction[1]
 
@@ -136,7 +136,7 @@ class GameEngine:
             game.basic_moves[pawn_cords] = [(move_to_row, move_to_col)]
 
     def _can_capture_at_direction(
-        self, game: Game, row: int, column: int, direction: tuple[Union[-1, 1], Union[-1, 1]]
+        self, game: Game, row: int, column: int, direction: Tuple[Union[-1, 1], Union[-1, 1]]
     ) -> bool:
         opponent_row, opponent_col = row - (direction[0] * game.active_player), column - direction[1]
         move_to_row, move_to_col = row - 2 * (direction[0] * game.active_player), column - 2 * direction[1]
