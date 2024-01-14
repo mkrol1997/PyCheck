@@ -39,7 +39,9 @@ function playGame(){
 }
 
 socket.on('connect', () => {
-    socket.emit('user_connected', { "channel": channel });
+    window.onload = () => {
+        socket.emit('user_connected', { "channel": channel });
+    };
 });
 
 socket.on('play_game', () => {
