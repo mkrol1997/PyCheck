@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from checkers_app.game_engine.board import Board
-from checkers_app.game_engine.engine import GameEngine
+from checkers_app.game_engine.game import Game
 
 
 class Rooms:
@@ -9,9 +9,9 @@ class Rooms:
         self.current_games = {}
 
     @staticmethod
-    def _create_new_game() -> GameEngine:
+    def _create_new_game() -> Game:
         board = Board()
-        game = GameEngine(board)
+        game = Game(board)
         return game
 
     def add_new_game(self, channel: str) -> None:
@@ -22,7 +22,7 @@ class Rooms:
         if channel in self.current_games:
             del self.current_games[channel]
 
-    def get_channel_game(self, channel: str) -> GameEngine:
+    def get_channel_game(self, channel: str) -> Game:
         try:
             return self.current_games[channel]
         except KeyError:
