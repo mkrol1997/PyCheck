@@ -79,15 +79,17 @@ def move_pawn(data):
 @socketio.on("join_room")
 def join_game_room(data):
     channel = data.get("room_id")
-    channel_game = games_storage.get_channel_game(channel)
-
     join_room(channel)
     emit("handle_message", f"{request.sid} has joined the room", room=channel, broadcast=True)
 
-    game_document = collection.find_one({"channel": channel})
-    players = game_document.get("players")
 
-    if channel_game and players and len(game_document.get("players")) == 2:
+@socketio.on("play_game")
+def play_checkers(data):
+    channel = data.get("channel")
+    channel_game = games_storage.get_channel_game(channel)
+    game_document = collection.find_one({"channel": channel})
+
+    if game_document and channel_game and len(game_document.get("players")) == 2:
         current_player_sid = db_tools.current_player_sid(channel, channel_game.active_player)
         socketio.emit("play_game", room=current_player_sid)
 

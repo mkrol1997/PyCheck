@@ -47,4 +47,6 @@ def room():
         "pawn_white_king": url_for("static", filename="assets/board/pawn_white_king.png"),
         "board_img": url_for("static", filename="assets/board/board.png"),
     }
-    return render_template("room.html", channel=channel, **assets, join_url=join_url)
+    if games_storage.get_channel_game(channel):
+        return render_template("room.html", channel=channel, **assets, join_url=join_url)
+    return redirect(url_for("main.home"))

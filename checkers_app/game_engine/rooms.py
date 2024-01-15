@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Union
+
 from checkers_app.game_engine.board import Board
 from checkers_app.game_engine.game import Game
 
@@ -22,8 +24,8 @@ class Rooms:
         if channel in self.current_games:
             del self.current_games[channel]
 
-    def get_channel_game(self, channel: str) -> Game:
+    def get_channel_game(self, channel: str) -> Union[Game, False]:
         try:
             return self.current_games[channel]
         except KeyError:
-            pass
+            return False
