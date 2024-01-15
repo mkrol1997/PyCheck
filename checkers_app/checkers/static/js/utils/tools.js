@@ -53,5 +53,5 @@ function showModal() {
 }
 
 function copyToClipboard(text) {
-    navigator.clipboard.writeText(text);
+    console.log("Copy to CLIPBOARD not available using HTTP");
 }
