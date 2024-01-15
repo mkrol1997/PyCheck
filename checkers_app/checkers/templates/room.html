@@ -122,11 +122,6 @@
     </div>
 </section>
 
-<!-- Socket IO -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
-        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
-        crossorigin="anonymous"></script>
-
 <script>
     channel = "{{ channel }}"
     let pawns_cords_with_legal_moves = [];
@@ -140,14 +135,19 @@
     const pawn_black_king_img = "{{ pawn_black_king }}";
 </script>
 
+<!-- Socket IO -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+        crossorigin="anonymous"></script>
+
 <!-- Custom JavaScript -->
-<script src="{{ url_for('static', filename='js/socketio/socket.js') }}"></script>
-<script src="{{ url_for('static', filename='js/socketio/game_events.js') }}"></script>
-<script src="{{ url_for('static', filename='js/socketio/chat_events.js') }}"></script>
-<script src="{{ url_for('static', filename='js/engine_manager/engine_connection.js') }}"></script>
 <script src="{{ url_for('static', filename='js/utils/draw_board.js') }}"></script>
 <script src="{{ url_for('static', filename='js/utils/fetch_channel.js') }}"></script>
 <script src="{{ url_for('static', filename='js/utils/tools.js') }}"></script>
+<script src="{{ url_for('static', filename='js/engine_manager/engine_connection.js') }}"></script>
+<script src="{{ url_for('static', filename='js/socketio/socket.js') }}"></script>
+<script src="{{ url_for('static', filename='js/socketio/game_events.js') }}"></script>
+<script src="{{ url_for('static', filename='js/socketio/chat_events.js') }}"></script>
 
 <script>
     joinRoom();

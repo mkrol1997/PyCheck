@@ -38,9 +38,9 @@ function playGame(){
     getCurrentPlayerMoves();
 }
 
-window.onload = () => {
+socket.on("connect", () => {
     socket.emit('user_connected', { "channel": channel });
-};
+});
 
 socket.on('play_game', () => {
     playGame();
