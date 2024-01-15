@@ -20,14 +20,14 @@ def create_room():
     channel = str(uuid.uuid4())[:8].upper()
 
     games_storage.add_new_game(channel)
-    collection.insert_one({"channel": channel})
+    collection.insert_one({"channel": channel, "players": {}})
 
     return redirect(url_for("main.room", channel=channel))
 
 
 @main.route("/find_channel", methods=["POST"])
 def find_channel():
-    channel = request.get_json().get("channel")
+    channel = request.get_json().get("channel").upper()
     channel_document = collection.find_one({"channel": channel})
 
     if channel_document:

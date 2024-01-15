@@ -84,10 +84,10 @@ def join_game_room(data):
     join_room(channel)
     emit("handle_message", f"{request.sid} has joined the room", room=channel, broadcast=True)
 
-    game_data = collection.find_one({"channel": channel})
-    players = game_data.get("players")
+    game_document = collection.find_one({"channel": channel})
+    players = game_document.get("players")
 
-    if channel_game and players and len(game_data.get("players")) == 2:
+    if channel_game and players and len(game_document.get("players")) == 2:
         current_player_sid = db_tools.current_player_sid(channel, channel_game.active_player)
         socketio.emit("play_game", room=current_player_sid)
 

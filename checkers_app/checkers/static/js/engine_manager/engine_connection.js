@@ -5,8 +5,6 @@ async function getCurrentPlayerMoves() {
         pawn_objects = queryPawnsUsingCords(pawns_cords_with_legal_moves);
         enablePawnsToBeSelected(pawn_objects);
         highlightPossibleMoves(pawn_objects);
-    } else {
-        console.log("Game ended");
     }
 }
 
