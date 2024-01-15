@@ -127,6 +127,19 @@
         integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
         crossorigin="anonymous"></script>
 
+<script>
+    channel = "{{ channel }}"
+    let pawns_cords_with_legal_moves = [];
+    let pawn_objects = [];
+    const board = document.getElementById('checkersBoard');
+
+    const pawn_white_img = "{{ pawn_white }}";
+    const pawn_white_king_img = "{{ pawn_white_king }}";
+
+    const pawn_black_img = "{{ pawn_black }}";
+    const pawn_black_king_img = "{{ pawn_black_king }}";
+</script>
+
 <!-- Custom JavaScript -->
 <script src="{{ url_for('static', filename='js/socketio/socket.js') }}"></script>
 <script src="{{ url_for('static', filename='js/socketio/game_events.js') }}"></script>
@@ -137,21 +150,8 @@
 <script src="{{ url_for('static', filename='js/utils/tools.js') }}"></script>
 
 <script>
-    channel = "{{ channel }}"
-
-    let pawns_cords_with_legal_moves = [];
-    let pawn_objects = [];
-    const board = document.getElementById('checkersBoard');
-
-    const pawn_white_img = "{{ pawn_white }}";
-    const pawn_white_king_img = "{{ pawn_white_king }}";
-
-    const pawn_black_img = "{{ pawn_black }}";
-    const pawn_black_king_img = "{{ pawn_black_king }}";
-
     joinRoom();
     updateBoard();
-
 </script>
 
 {% include "footer.html" %}
