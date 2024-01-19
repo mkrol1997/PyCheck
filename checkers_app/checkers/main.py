@@ -20,7 +20,7 @@ def create_room():
     channel = str(uuid.uuid4())[:8].upper()
     game_mode = request.args.get("game_mode")
     games_storage.add_new_game(channel)
-    collection.insert_one({"channel": channel, "players": {}})
+    collection.insert_one({"channel": channel, "game_mode": game_mode, "players": {}})
 
     game_modes = {
         "pvp": "main.room",

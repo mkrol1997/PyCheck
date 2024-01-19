@@ -106,7 +106,7 @@ def play_checkers(data):
 @socketio.on("disconnect")
 def disconnect():
     user_sid = request.sid
-    status = "Your opponent left"
+    status = f"Player {request.sid} has left the room"
 
     try:
         channels = socketio.server.manager.get_rooms(sid=user_sid, namespace="/")
@@ -118,7 +118,7 @@ def disconnect():
     except TypeError:
         winner = False
 
-    emit("handle_message", f"{request.sid} has left the room", room=room_channel, broadcast=True)
+    emit("handle_message", f"Player {request.sid} has left the room", room=room_channel, broadcast=True)
     if winner:
         games_storage.remove_game(room_channel)
         emit("game_finished", {"winner": winner, "status": status}, room=room_channel, broadcast=True)
@@ -128,11 +128,10 @@ def disconnect():
 def play_ai_game(data):
     channel = data.get("channel")
     channel_game = games_storage.get_channel_game(channel)
-
-    db_tools.get_current_player(channel, request.sid)
+    player_sid = db_tools.current_player_sid(channel, 1)
 
     if channel_game.active_player == 1:
-        return socketio.emit("play_game", room=request.sid)
+        return socketio.emit("play_game", room=player_sid)
 
     game_engine.update_pawns_with_legal_moves(game=channel_game)
     pawns_with_legal_moves = game_engine.get_next_moves(game=channel_game)
@@ -142,7 +141,7 @@ def play_ai_game(data):
         emit(
             "game_finished", {"winner": channel_game.active_player * -1, "status": status}, room=channel, broadcast=True
         )
-        games_storage.remove_game(channel)
+        return games_storage.remove_game(channel)
 
     mcts = MonteCarloTreeSearch(initial_state=channel_game, iterations=MCTS_ITERATIONS)
     current_state = mcts.run()
