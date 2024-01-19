@@ -10,7 +10,7 @@ def add_player(channel: str, player_sid: str) -> None:
         players = doc.get("players", {})
         if not players:
             collection.update_one({"channel": channel}, {"$set": {"players": {player_sid: 1}}})
-        elif len(players) == 1:
+        elif doc.get("game_mode") == "pvp" and len(players) == 1:
             collection.update_one({"channel": channel}, {"$set": {f"players.{player_sid}": -1}})
 
 
