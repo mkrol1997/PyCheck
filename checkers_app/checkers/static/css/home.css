@@ -1,11 +1,11 @@
-@media (max-width:1000px) {
+@media (max-width:1100px) {
     .section-wrapper {
         width: 90vw !important;
     }
 }
 
 
-@media (max-width:1300px) {
+@media (max-width:1700px) {
     .section-wrapper {
         width: 80vw !important;
     }
