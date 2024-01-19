@@ -37,7 +37,7 @@ Built using technologies, including:
 - **Flask-SocketIO**: Enabling real-time bidirectional communication between the server and clients.
 - **MongoDB**: A NoSQL database for scalable and flexible data management.
 - **PyTest:** Testing framework for automated testing of the application.
-- **Monte Carlo Algorithm (MCST):** Employs the Monte Carlo search algorithm for intelligent decision-making in the player vs. computer mode.
+- **Monte Carlo Search Tree Algorithm (MCST):** Employs the Monte Carlo search algorithm for intelligent decision-making in the player vs. computer mode.
 - **Docker and Docker-Compose:** Providing containerization and deployment simplifying, ensuring consistency across environments.
 - **Portainer:** Providing management interface for Docker environments.
 - **AWS EC2:** Scalable deployment platform, ensuring high availability and performance.
