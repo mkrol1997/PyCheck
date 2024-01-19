@@ -27,7 +27,7 @@ ________
 ________
 # Overview
 
-The **Checkers Web App** is a dynamic web application that enables users to enjoy the classic game of American Checkers directly in their browser. Platform offers both player vs. player matches and player vs. computer matches, providing an engaging gaming experience.
+The **Checkers Web App** is a dynamic web application that enables users to enjoy the classic game of American Checkers directly in their browser. The platform offers both player vs. player and player vs. computer matches, providing an engaging gaming experience.
 PyCheck ensures instant connections between users, enabling real-time communication. Whether you're challenging a friend or engaging in a solo match against the computer, Socket.IO enables responsive gameplay with bidirectional communication.
 ## Technologies Used
 
