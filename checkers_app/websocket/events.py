@@ -1,10 +1,15 @@
+import random
+import time
+
 from flask import request
 from flask_socketio import emit, join_room
 
 from checkers_app.checkers.main import collection
 from checkers_app.database import db_tools
 from checkers_app.game_engine import game_engine, games_storage
+from checkers_app.mcts.mcts import MonteCarloTreeSearch
 from checkers_app.websocket import socketio
+from constant import MCTS_ITERATIONS
 
 
 @socketio.on("user_connected")
@@ -40,7 +45,7 @@ def find_pawns_to_move(data):
     if pawns_with_moves is not None:
         return emit("available_moves", {"moves": pawns_with_moves}, room=channel, to=request.sid)
 
-    status = "No more available moves"
+    status = "No more moves available"
     emit("game_finished", {"winner": channel_game.active_player * -1, "status": status}, room=channel, broadcast=True)
     games_storage.remove_game(channel)
 
@@ -73,7 +78,11 @@ def move_pawn(data):
     game_engine.switch_active_player(game=channel_game)
 
     current_player_sid = db_tools.current_player_sid(channel, channel_game.active_player)
-    socketio.emit("play_game", room=current_player_sid)
+    game_document = collection.find_one({"channel": channel})
+
+    if game_document and channel_game and len(game_document.get("players")) == 2:
+        return socketio.emit("play_game", room=current_player_sid)
+    return play_ai_game({"channel": channel})
 
 
 @socketio.on("join_room")
@@ -113,6 +122,35 @@ def disconnect():
     if winner:
         games_storage.remove_game(room_channel)
         emit("game_finished", {"winner": winner, "status": status}, room=room_channel, broadcast=True)
+
+
+@socketio.on("play_ai_game")
+def play_ai_game(data):
+    channel = data.get("channel")
+    channel_game = games_storage.get_channel_game(channel)
+
+    db_tools.get_current_player(channel, request.sid)
+
+    if channel_game.active_player == 1:
+        return socketio.emit("play_game", room=request.sid)
+
+    game_engine.update_pawns_with_legal_moves(game=channel_game)
+    pawns_with_legal_moves = game_engine.get_next_moves(game=channel_game)
+
+    if not pawns_with_legal_moves:
+        status = "No more moves available"
+        emit(
+            "game_finished", {"winner": channel_game.active_player * -1, "status": status}, room=channel, broadcast=True
+        )
+        games_storage.remove_game(channel)
+
+    mcts = MonteCarloTreeSearch(initial_state=channel_game, iterations=MCTS_ITERATIONS)
+    current_state = mcts.run()
+
+    games_storage.current_games[channel] = current_state.state
+    send_matrix({"channel": channel})
+
+    return socketio.emit("play_game", room=request.sid)
 
 
 @socketio.on("send_message")
