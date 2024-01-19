@@ -112,8 +112,6 @@ class MonteCarloTreeSearch:
         white_pawns = sum(1 for row in state.board.matrix for pawn in row if pawn.value == -1)
         black_pawns = sum(1 for row in state.board.matrix for pawn in row if pawn.value == 1)
 
-        print(f"BLACK {black_pawns}")
-        print(f"WHITE: {white_pawns}")
         if black_pawns:
             return 2
         elif white_pawns:
