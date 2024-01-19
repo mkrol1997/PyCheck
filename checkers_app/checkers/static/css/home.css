@@ -11,6 +11,11 @@
     }
 }
 
+@media (max-width:800px) {
+    .card-deck {
+        margin-bottom: 5rem !important;
+    }
+}
 
 .card-deck {
     display: block;
