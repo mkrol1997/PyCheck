@@ -18,11 +18,16 @@ def home():
 @main.route("/create_room")
 def create_room():
     channel = str(uuid.uuid4())[:8].upper()
-
+    game_mode = request.args.get("game_mode")
     games_storage.add_new_game(channel)
     collection.insert_one({"channel": channel, "players": {}})
 
-    return redirect(url_for("main.room", channel=channel))
+    game_modes = {
+        "pvp": "main.room",
+        "pve": "main.room_pve",
+    }
+
+    return redirect(url_for(game_modes[game_mode], channel=channel))
 
 
 @main.route("/find_channel", methods=["POST"])
@@ -49,4 +54,22 @@ def room():
     }
     if games_storage.get_channel_game(channel):
         return render_template("room.html", channel=channel, **assets, join_url=join_url)
+    return redirect(url_for("main.home"))
+
+
+@main.route("/room_pve")
+def room_pve():
+    channel = request.args.get("channel")
+    join_url = urljoin(request.url_root, url_for("main.room", channel=channel))
+
+    assets = {
+        "pawn_black": url_for("static", filename="assets/board/pawn_black.png"),
+        "pawn_black_king": url_for("static", filename="assets/board/pawn_black_king.png"),
+        "pawn_white": url_for("static", filename="assets/board/pawn_white.png"),
+        "pawn_white_king": url_for("static", filename="assets/board/pawn_white_king.png"),
+        "board_img": url_for("static", filename="assets/board/board.png"),
+    }
+
+    if games_storage.get_channel_game(channel):
+        return render_template("room_pve.html", channel=channel, **assets, join_url=join_url)
     return redirect(url_for("main.home"))

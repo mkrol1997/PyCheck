@@ -12,62 +12,63 @@
                     Choose action:
                 </h4>
             </div>
-            <div>
-                <div class="row justify-content-center align-items-start">
-                    <div class="col-xs-10 col-sm-10 col-lg-4 my-xs-3 my-sm-3 my-xs-5">
-                        <div class="card-deck" style="border-radius: 1rem">
-                            <div class="card-content">
-                                <ul>
-                                    <li><i class="fa-regular fa-square-plus"></i> &nbsp Create new game</li>
-                                    <li><i class="fa-regular fa-user"></i>&nbsp Play against a friend</li>
-                                    <li><i class="fa-solid fa-chess-pawn"></i> &nbsp Play as black</li>
-                                    <li><i class="fa-solid fa-share"></i> Share code to your friend</li>
-                                </ul>
-                                <div class="btn shadow w-100 card-read-more align-bottom"
-                                     style="border-radius: 1rem; background-color: orange">
-                                    <a href="{{ url_for('main.create_room') }}" class="btn btn-block">
-                                        Create room!
-                                    </a>
-                                </div>
+
+
+            <div class="row flex-row justify-content-center align-items-start">
+                <div class="col-xs-10 col-sm-10 col-lg-4 my-xs-3 my-sm-3 my-xs-5 flex-fill">
+                    <div class="card-deck" style="border-radius: 1rem">
+                        <div class="card-content">
+                            <ul>
+                                <li><i class="fa-regular fa-square-plus"></i> &nbsp Create new game</li>
+                                <li><i class="fa-regular fa-user"></i>&nbsp Play against a friend</li>
+                                <li><i class="fa-solid fa-chess-pawn"></i> &nbsp Play as black</li>
+                                <li><i class="fa-solid fa-share"></i> Share code to your friend</li>
+                            </ul>
+                            <div class="btn shadow w-100 card-read-more align-bottom"
+                                 style="border-radius: 1rem; background-color: orange">
+                                <a href="{{ url_for('main.create_room', game_mode='pvp' ) }}"
+                                   class="btn btn-block">
+                                    Create room!
+                                </a>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-xs-10 col-sm-10 col-lg-4 h-100 my-xs-3 my-sm-3  my-xs-5">
-                        <div class="card-deck" style="border-radius: 1rem">
-                            <div class="card-content">
-                                <ul>
-                                    <li><i class="fa-solid fa-chess-board mr-2"></i>Enter existing room</li>
-                                    <li><i class="fa-solid fa-right-to-bracket"></i> Join to a friend</li>
-                                    <li><i class="fa-regular fa-chess-pawn"></i>&nbsp Play as white</li>
-                                    <li><i class="fa-solid fa-magnifying-glass"></i> Find room using unique code</li>
-                                </ul>
-                                <div class="btn shadow w-100 card-read-more align-bottom"
-                                     style="border-radius: 1rem; background-color: orange">
-                                    <a href="" class="btn btn-block" data-toggle="modal"
-                                       data-target="#modalContent">
-                                        Join room!
-                                    </a>
-                                </div>
+                <div class="col-xs-10 col-sm-10 col-lg-4 my-xs-3 my-sm-3 my-xs-5">
+                    <div class="card-deck" style="border-radius: 1rem">
+                        <div class="card-content">
+                            <ul>
+                                <li><i class="fa-solid fa-chess-board mr-2"></i>Enter existing room</li>
+                                <li><i class="fa-solid fa-right-to-bracket"></i> Join to a friend</li>
+                                <li><i class="fa-regular fa-chess-pawn"></i>&nbsp Play as white</li>
+                                <li><i class="fa-solid fa-magnifying-glass"></i> Find room using unique code</li>
+                            </ul>
+                            <div class="btn shadow w-100 card-read-more align-bottom"
+                                 style="border-radius: 1rem; background-color: orange">
+                                <a href="" class="btn btn-block" data-toggle="modal"
+                                   data-target="#modalContent">
+                                    Join room!
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-10 col-sm-10 col-lg-4 my-xs-3 my-sm-3 my-xs-5">
-                        <div class="card-deck" style="border-radius: 1rem">
+                </div>
+                <div class="col-xs-10 col-sm-10 col-lg-4 my-xs-3 my-sm-3 my-xs-5 mb-0">
+                    <div class="card-deck" style="border-radius: 1rem">
 
-                            <div class="card-content">
-                                <ul>
-                                    <li><i class="fa-solid fa-robot"></i> Play against computer</li>
-                                    <li>&nbsp<i class="fa-solid fa-chess-pawn"></i>&nbsp Start as black</li>
-                                    <li>&nbsp<i class="fa-solid fa-backward-step"></i>&nbsp Beginners friendly</li>
-                                    <li><i class="fa-regular fa-star"></i>&nbsp Practice against AI</li>
-                                </ul>
-                                <div class="btn shadow w-100 card-read-more align-bottom"
-                                     style="border-radius: 1rem; background-color: orange">
-                                    <a href="" class="btn btn-block">
-                                        Play vs AI!
-                                    </a>
-                                </div>
+                        <div class="card-content">
+                            <ul>
+                                <li><i class="fa-solid fa-robot"></i> Play against computer</li>
+                                <li>&nbsp<i class="fa-solid fa-chess-pawn"></i>&nbsp Start as black</li>
+                                <li>&nbsp<i class="fa-solid fa-backward-step"></i>&nbsp Beginners friendly</li>
+                                <li><i class="fa-regular fa-star"></i>&nbsp Practice against AI</li>
+                            </ul>
+                            <div class="btn shadow w-100 card-read-more align-bottom"
+                                 style="border-radius: 1rem; background-color: orange">
+                                <a href="{{ url_for('main.create_room', game_mode='pve') }}" class="btn btn-block">
+                                    Play vs AI!
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -107,7 +108,8 @@
                     Board size!
                 </h5>
                 <p>
-                    In American Checkers, known also as English Draughts the board consists of 64 squares (8x8 checkerboard).
+                    In American Checkers, known also as English Draughts the board consists of 64 squares (8x8
+                    checkerboard).
                 </p>
                 <h5>
                     How to capture opponent’s pieces?
@@ -122,12 +124,14 @@
                     King Pawn?
                 </h5>
                 <p>
-                    When an uncrowned piece reaches the king row it turns into a king. In American Checkers a king moves only one square,
+                    When an uncrowned piece reaches the king row it turns into a king. In American Checkers a king moves
+                    only one square,
                     but unlike regular pieces, a king can move and capture backwards, too.
                     <br>
                     <br>
                     <strong>Would you like to learn more about American Checkers? Check out the
-                        <a href="https://en.wikipedia.org/wiki/Checkers" target="_blank">Wikipedia Guide</a> guide</strong>
+                        <a href="https://en.wikipedia.org/wiki/Checkers" target="_blank">Wikipedia Guide</a>
+                        guide</strong>
                 </p>
             </div>
             <div class="container">
@@ -162,7 +166,9 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary ml-auto text-white" data-dismiss="modal">Close
                     </button>
-                    <button onclick="checkRoom()" type="submit" class="btn mr-auto text-white" style="background-color: orange">Join!</button>
+                    <button onclick="checkRoom()" type="submit" class="btn mr-auto text-white"
+                            style="background-color: orange">Join!
+                    </button>
                 </div>
             </div>
         </div>
