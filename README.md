@@ -2,7 +2,7 @@
 <img src="checkers_app/checkers/static/assets/public/pycheck_logo.png" width="500px" style="align=center"/>
 </p>
 
-# [PyCheck - Checkers Web App](https://github.com/mkrol1997/pixel-perfect/)
+# [PyCheck - Checkers Web App](https://github.com/mkrol1997/pycheck/)
 [![GitHub Stars](https://img.shields.io/github/stars/mkrol1997/pycheck?style=social)](https://github.com/mkrol1997/pycheck/)
 [![Downloads](https://img.shields.io/github/downloads/mkrol1997/pycheck/total.svg)](https://github.com/mkrol1997/pycheck/releases)
 ![Python Version](https://img.shields.io/badge/Python-3.11-yellow.svg)
