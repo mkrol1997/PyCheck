@@ -5,7 +5,7 @@ services:
     build:
       context: ..
       dockerfile: .docker/Dockerfile
-    image: ${ECR_REGISTRY}/pycheck:latest
+    image: ${ECR_REGISTRY}/pycheck:v1.0
     command: ["python", "run.py"]
     ports:
       - "80:80"
@@ -15,10 +15,13 @@ services:
     environment:
       - SECRET_KEY
       - SESSION_TIMEOUT
+      - FLASK_HOST
+      - FLASK_PORT
       - DATABASE_HOST
+      - DATABASE_PORT
       - DATABASE_NAME
 
   mongo:
-    image: mongo:latest
+    image: mongo:4.4
     ports:
       - "27017:27017"

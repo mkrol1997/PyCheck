@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pycheck
+  labels:
+    app: pycheck
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pycheck
+  template:
+    metadata:
+      labels:
+        app: pycheck
+    spec:
+      containers:
+      - name: pycheck
+        image: pycheck:v1.0
+        imagePullPolicy: Never
+        command: [ "python", "run.py" ]
+        ports:
+        - containerPort: 5000
+        env:
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: pycheck-secret
+                key: SECRET_KEY
+
+          - name: FLASK_HOST
+            valueFrom:
+              secretKeyRef:
+                name: pycheck-secret
+                key: FLASK_HOST
+
+          - name: FLASK_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: pycheck-config
+                key: FLASK_PORT
+
+          - name: SESSION_TIMEOUT
+            valueFrom:
+              configMapKeyRef:
+                name: pycheck-config
+                key: SESSION_TIMEOUT
+
+          - name: DATABASE_HOST
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: DATABASE_HOST
+
+          - name: DATABASE_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: mongo-config
+                key: DATABASE_PORT
+
+          - name: DATABASE_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: mongo-config
+                key: DATABASE_NAME
